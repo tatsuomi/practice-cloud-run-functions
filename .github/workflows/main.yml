@@ -26,8 +26,14 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.23.10' # バージョンを指定
-          cache: true # キャッシュを有効にする
+          go-version: '1.23.10'
+          cache: true
       # Goバージョンの確認
       - name: Check Go version
         run: go version
+      # パスの確認
+      - name: Check PATH
+        run: echo $PATH
+      # UTの実行
+      - name: Run tests
+        run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
