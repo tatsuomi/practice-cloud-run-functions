@@ -23,12 +23,12 @@ jobs:
     # TODO：目的の処理をできるように修正
     # 実際の処理
     steps:
-      # 現在参照しているブランチ名の表示
-      - name: Show current branch
-        run: echo "Current branch is ${{ github.ref }}"
+      # リポジトリのチェックアウト（現在参照しているブランチの資材を取得）
+      - name: Checkout repository
+        uses: actions/checkout@v3
       # Goのインストール
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: '1.23.10'
           cache: true
@@ -38,9 +38,13 @@ jobs:
       # Goバージョンの確認
       - name: Check Go version
         run: go version
-      # 移動
-      - name: Check PATH
-        run: ls ../practice-cloud-run-functions
+      # 静的解析
+      - name: Go Lint
+        uses: golangci/golangci-lint-action@v3
+      # ビルド
+      - name: Go Build
+        run: |
+          go build -v ./...
       # UTの実行
       - name: Run tests
         run: go test -v ../practice/... -coverprofile=coverage.out -covermode=atomic
