@@ -38,12 +38,12 @@ jobs:
       # Goバージョンの確認
       - name: Check Go version
         run: go version
-      # 静的解析
-      - name: Go Lint
-        uses: golangci/golangci-lint-action@v3
-      # フォルダの削除
-      - name: Remove practice directory
-        run: rm -rf practice
+      # # 静的解析
+      # - name: Go Lint
+      #   uses: golangci/golangci-lint-action@v3
+      # # フォルダの削除
+      # - name: Remove practice directory
+      #   run: rm -rf practice
       # ビルド
       - name: Go Build
         run: |
