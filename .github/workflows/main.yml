@@ -19,9 +19,16 @@ jobs:
     # TODO：自作のイメージから実行できるように
     # CI実行用のイメージ
     runs-on: ubuntu-latest
+
     # TODO：目的の処理をできるように修正
     # 実際の処理
     steps:
+      # リポジトリのチェックアウト
+      - name: Checkout repository
+      # プッシュしたブランチにチェックアウト
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
       # Goのインストール
       - name: Set up Go
         uses: actions/setup-go@v2
