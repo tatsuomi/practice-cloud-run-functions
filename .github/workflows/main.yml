@@ -31,9 +31,9 @@ jobs:
       # Goバージョンの確認
       - name: Check Go version
         run: go version
-      # パスの確認
+      # 移動
       - name: Check PATH
-        run: pwd && ls
+        run: ls
       # UTの実行
       - name: Run tests
         run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
