@@ -33,7 +33,7 @@ jobs:
         run: go version
       # パスの確認
       - name: Check PATH
-        run: echo $PATH
+        run: pwd && ls
       # UTの実行
       - name: Run tests
         run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
