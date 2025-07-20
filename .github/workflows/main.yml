@@ -41,10 +41,14 @@ jobs:
       # 静的解析
       - name: Go Lint
         uses: golangci/golangci-lint-action@v3
+      # フォルダの削除
+      - name: Remove practice directory
+        run: rm -rf practice
       # ビルド
       - name: Go Build
         run: |
-          go build -v ./...
+          cd practice
+          go build -v -o app .
       # UTの実行
       - name: Run tests
         run: go test -v ../practice/... -coverprofile=coverage.out -covermode=atomic
