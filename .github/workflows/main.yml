@@ -30,7 +30,7 @@ jobs:
           cache: true
       # ブランチの向き先確認
       - name: Check branch
-        run: echo "Branch: ${{ github.ref }}"
+        run: git branch
       # Goバージョンの確認
       - name: Check Go version
         run: go version
