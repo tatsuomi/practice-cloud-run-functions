@@ -41,11 +41,11 @@ jobs:
       # # 静的解析
       # - name: Go Lint
       #   uses: golangci/golangci-lint-action@v3
-      # ビルド
-      - name: Go Build
-        run: |
-          cd practice
-          go build -v -o app .
+      # # ビルド
+      # - name: Go Build
+      #   run: |
+      #     cd practice
+      #     go build -v -o app .
       # UTの実行
       - name: Run tests
         run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
