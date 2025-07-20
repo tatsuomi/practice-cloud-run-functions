@@ -33,7 +33,7 @@ jobs:
         run: go version
       # 移動
       - name: Check PATH
-        run: ls
+        run: ls -a
       # UTの実行
       - name: Run tests
         run: go test -v ./practice/... -coverprofile=coverage.out -covermode=atomic
