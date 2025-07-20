@@ -23,12 +23,9 @@ jobs:
     # TODO：目的の処理をできるように修正
     # 実際の処理
     steps:
-      # リポジトリのチェックアウト
-      - name: Checkout repository
-      # プッシュしたブランチにチェックアウト
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
+      # 現在参照しているブランチ名の表示
+      - name: Show current branch
+        run: echo "Current branch is ${{ github.ref }}"
       # Goのインストール
       - name: Set up Go
         uses: actions/setup-go@v2
