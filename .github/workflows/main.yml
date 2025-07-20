@@ -22,8 +22,6 @@ jobs:
     # TODO：目的の処理をできるように修正
     # 実際の処理
     steps:
-      # チェックアウト先のリポジトリを取得
-      - uses: actions/checkout@github-actions
       # Goのインストール
       - name: Set up Go
         uses: actions/setup-go@v2
