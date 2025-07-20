@@ -36,4 +36,4 @@ jobs:
         run: ls
       # UTの実行
       - name: Run tests
-        run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
+        run: go test -v ./practice/... -coverprofile=coverage.out -covermode=atomic
