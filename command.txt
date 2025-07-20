@@ -1,0 +1,1 @@
+go mod init github.com/practice-cloud-run-functions
