@@ -72,11 +72,12 @@ jobs:
       # Docker Buildxのセットアップ
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      # 移動
+      - name: Change directory to src
+        run: cd src
       # ビルド
       - name: Go Build
-        run: |
-          cd practice
-          go build -v -o app .
+        run: go build -v -o app .
       # Dockerイメージのビルド
       - name: Build Docker image
         run: |
@@ -86,3 +87,4 @@ jobs:
             --build-arg GOARCH=amd64 \
             --build-arg GOARM=7 \
             -t practice-cloud-run-functions:latest .
+            
