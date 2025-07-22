@@ -37,9 +37,8 @@ jobs:
         run: go version
       # UTの実行
       - name: Run tests
-        run: |
-          cd src
-          go test -v ./... -coverprofile=coverage.out -covermode=atomic
+        run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
+        working-directory: src
   lint:
     runs-on: ubuntu-latest
     steps:
