@@ -1,1 +1,117 @@
-go mod init github.com/practice-cloud-run-functions
+# go mod設定
+go mod init github.com/practice-cloud-run-functions/myapp
+# go.modを参照しないといけないのでcontext全渡し
+docker build -t go-api:local -f reference-api/Dockerfile .
+# frontendフォルダに閉じてるのでOK
+docker build -t frontend:local ./frontend
+
+docker-compose up --build
+
+
+# DBイメージ起動
+docker compose up -d
+
+# minikubeでホストと同じDockerドライバを使用できるように設定して起動
+minikube start --driver=docker
+
+# minikubeのDocker内にイメージを取り込み
+minikube image load go-api:local
+minikube image load frontend:local
+
+# コピーできたかの確認
+minikube ssh
+docker images
+exit
+
+# デプロイ
+cd k8s/local
+kubectl apply -f backendConfigmap.yaml
+kubectl apply -f backendSecret.yaml
+kubectl apply -f backendDeployment.yaml
+kubectl apply -f frontendDeployment.yaml
+
+# 失敗したときの再作成
+kubectl delete pod -l app=go-api
+kubectl delete pod -l app=frontend
+
+# deploymentの削除
+kubectl delete -f backendDeployment.yaml
+kubectl delete -f frontendDeployment.yaml
+
+# pod一覧を表示
+kubectl get pods
+
+# front画面にアクセス
+minikube service frontend
+
+# 停止
+minikube stop
+
+# DB削除
+docker compose down -v
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Podのログ確認
+kubectl logs psql-test
+
+# front画面が見えない時の確認
+kubectl get svc frontend (NodePortになっていること)
+
+
+
+
+
+# port forward
+kubectl port-forward svc/go-api 8080:80
+
+# 打鍵用コマンド
+curl http://localhost:8080/users
+
+
+
+
+# Podが立ち上がらなかった時の設定確認
+# どこでエラーが出たかも教えてくれる
+kubectl describe pod go-api-6744f8c584-d5bwr
+
+# Podに入って詳細確認
+kubectl exec -it api-76847d6ffc-9j4c5 -- sh
+
+# 環境変数表示
+echo $DB_HOST
+echo $DB_PORT
+echo $DB_USER
+echo $DB_PASS
+echo $DB_NAME
+
+Autopilot 用に Deployment YAML 最小化
+
+Cloud SQL + Auth Proxy 版 manifest 作成
+
+# SA作成
+gcloud iam service-accounts create cloudsql-sa
+# 権限付与
+gcloud projects add-iam-policy-binding practice-482212 --member="serviceAccount:cloudsql-sa@practice-482212.iam.gserviceaccount.com" --role="roles/cloudsql.client"
+# クレデンシャル取得
+gcloud container clusters get-credentials autopilot-practice --region us-central1 --project practice-482212
+# Kubernetes Service Account 作成
+kubectl create serviceaccount cloudsql-ksa
+# SAとKSA紐づけ
+kubectl annotate serviceaccount cloudsql-ksa iam.gke.io/gcp-service-account=cloudsql-sa@practice-482212.iam.gserviceaccount.com

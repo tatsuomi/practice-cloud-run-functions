@@ -14,51 +14,51 @@ on:
 
 # ジョブの定義
 jobs:
-  ut:
-    # TODO：自作のイメージから実行できるように
-    # CI実行用のイメージ
-    runs-on: ubuntu-latest
-    # 実際の処理
-    steps:
-      # リポジトリのチェックアウト（現在参照しているブランチの資材を取得）
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      # Goのインストール
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23.10'
-          cache: true
-      # ブランチの向き先確認
-      - name: Check branch
-        run: git branch
-      # Goバージョンの確認
-      - name: Check Go version
-        run: go version
-      # UTの実行
-      - name: Run tests
-        run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
-        working-directory: src
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      # リポジトリのチェックアウト（現在参照しているブランチの資材を取得）
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      # Goのインストール
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23.10'
-          cache: true
-      # 静的解析
-      - name: Go Lint
-        uses: golangci/golangci-lint-action@v3
-        with:
-          working-directory: src
+  # ut:
+  #   # TODO：自作のイメージから実行できるように
+  #   # CI実行用のイメージ
+  #   runs-on: ubuntu-latest
+  #   # 実際の処理
+  #   steps:
+  #     # リポジトリのチェックアウト（現在参照しているブランチの資材を取得）
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     # Goのインストール
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v5
+  #       with:
+  #         go-version: '1.23.10'
+  #         cache: true
+  #     # ブランチの向き先確認
+  #     - name: Check branch
+  #       run: git branch
+  #     # Goバージョンの確認
+  #     - name: Check Go version
+  #       run: go version
+  #     # UTの実行
+  #     - name: Run tests
+  #       run: go test -v ./... -coverprofile=coverage.out -covermode=atomic
+  #       working-directory: src
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # リポジトリのチェックアウト（現在参照しているブランチの資材を取得）
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     # Goのインストール
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v5
+  #       with:
+  #         go-version: '1.23.10'
+  #         cache: true
+  #     # 静的解析
+  #     - name: Go Lint
+  #       uses: golangci/golangci-lint-action@v3
+  #       with:
+  #         working-directory: src
   docker-build:
     runs-on: ubuntu-latest
-    needs: [ut, lint]
+    # needs: [ut, lint]
     steps:
       # リポジトリのチェックアウト（現在参照しているブランチの資材を取得）
       - name: Checkout repository

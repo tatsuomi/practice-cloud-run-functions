@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
+    restart: always
+
+  # reference-api:
+  #   build:
+  #     context: .
+  #     dockerfile: ./reference-api/Dockerfile
+  #   container_name: reference-api
+  #   environment:
+  #     DB_HOST: ${DB_HOST}
+  #     DB_PORT: ${DB_PORT}
+  #     DB_USER: ${DB_USER}
+  #     DB_PASSWORD: ${DB_PASS}
+  #     DB_NAME: ${DB_NAME}
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - postgres
+volumes:
+  postgres_data:
+  
