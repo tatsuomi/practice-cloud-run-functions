@@ -14,7 +14,13 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:local
-        imagePullPolicy: IfNotPresent
+        image: us-central1-docker.pkg.dev/practice-482212/my-app-repo/frontend:v1
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
